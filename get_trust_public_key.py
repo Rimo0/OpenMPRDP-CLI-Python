@@ -19,7 +19,7 @@ except:
     exit()
 response = _parse_url(url)
 res = response.json()
-# print json.loads('"%s"' %res) #typr(res)=dict
+# print json.loads('"%s"' %res) #type(res)=dict
 
 # create some dicts , to match data
 uuid_dict = {}  # dict "uuid":"public_key"
