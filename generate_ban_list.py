@@ -13,9 +13,9 @@ expires = "forever"
 reason = "Bad reputation"
 
 # load old ban list and local reputation
-with open(file_reputation, "r") as f:
+with open(file_reputation, "r", encoding='utf-8') as f:
     reputation = json.loads(f.read())
-with open(file_server_banlist, "r") as d:
+with open(file_server_banlist, "r", encoding='utf-8') as d:
     banlist = json.loads(d.read())
 
 already_exist_player = []  # Prevent duplication
@@ -51,7 +51,6 @@ for player_uuid in reputation:
                 # print(info)
                 banlist.append(info) # new ban list
                 # print(banlist)
-                break
 
 # backup old ban list
 time = str(time.strftime("%Y%m%d-%H%M%S", time.localtime()))
