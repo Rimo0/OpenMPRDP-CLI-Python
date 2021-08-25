@@ -60,7 +60,7 @@ for key in key_list:
         content = items["content"]
         print("Now solving submit: " + submit_uuid + " --<Submit:" + str(submit_count) + "/" + str(
             submit_all_count) + ">" + " --<Server:" + str(server_count) + "/" + str(server_all_count) + ">")
-        with open("temp.txt", 'w+') as f:
+        with open("temp.txt", 'w+', encoding='utf-8') as f:
             f.write(content)
         try:
             result = subprocess.check_output("gpg --decrypt temp.txt", shell=True, stderr=subprocess.STDOUT,
@@ -118,7 +118,6 @@ if len(error_submit) >= 1:
     print("  >> from server: " + error_submit_server[0])
     for items in error_submit:
         if error_submit_server[i] != error_submit_server[i - 1]:
-            print("\n")
             print("  >> from server: " + error_submit_server[i])
         print("Submit UUID: " + str(items))
         i += 1

@@ -95,7 +95,7 @@ input("Press any key to continue.")
 
 # writing message
 
-with open("message.txt", 'r+') as f:
+with open("message.txt", 'r+', encoding='utf-8') as f:
     f.truncate(0)
     f.write("uuid: " + server_uuid)
     f.write("\n")
@@ -113,8 +113,9 @@ os.system("gpg -a --clearsign message.txt")
 url = "https://test.openmprdb.org/v1/submit/new"
 headers = {"Content-Type": "text/plain"}
 
-with open("message.txt.asc", "r") as f:
+with open("message.txt.asc", "r", encoding='utf-8') as f:
     data = f.read()
+    data = data.encode('utf-8')
 try:
     @retry(stop_max_attempt_number=3)
     def _parse_url(url, data, headers):
@@ -128,7 +129,7 @@ except:
 response = _parse_url(url, data, headers)
 
 res = response.json()
-print(json.loads('"%s"' % res))  # typr(res)=dict
+print(json.loads('"%s"' % res))  # type(res)=dict
 
 # check status
 status = res.get("status")
