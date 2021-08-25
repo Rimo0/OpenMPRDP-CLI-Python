@@ -41,3 +41,13 @@ Windows
 ● collect reputation data
 
 ● automatically update players whose reputation value is lower than a certain score to banlist
+
+# How to use
+
+1. Configure the environment.
+
+2. Generate a pair of public and private keys with gunpg client.
+
+3. Each functional module is an independent file, which can be started as required.
+
+4. That's all.
