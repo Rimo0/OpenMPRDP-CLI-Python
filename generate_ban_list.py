@@ -23,7 +23,7 @@ for items in banlist:  # type(items)=dict
     already_exist_player.append(items["uuid"])
 
 # if a player in local reputation with a low point , and he isn't in the old ban list
-# he will be add in to the new ban list later
+# he will be add to the new ban list
 for player_uuid in reputation:
     if reputation[player_uuid] < min_point_toban:
         if player_uuid not in already_exist_player:
@@ -39,7 +39,7 @@ for player_uuid in reputation:
                 print("An error occurred while searching the player.Try again later.")
                 exit()
             if res.text == "":
-                print("Player not found!")
+                print("Player: "+player_uuid+" not found!")
                 continue
             else:
                 result = res.json()
