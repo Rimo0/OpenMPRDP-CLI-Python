@@ -62,7 +62,7 @@ Windows
 6. copy the old ban list to the OpenMPRDB home directory
 7. modify this parameter "min_point_toban = 0" in generate_ban_list.py. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
 8. run generate_ban_list.py to generate a new ban list
-9. old ban list will be saved in fold "backup"
+9. old ban list will be saved in folder "backup"
 
 ### Create / delete submit
 1. you need to register first. run register.py to register yourself
@@ -76,7 +76,7 @@ Windows
 
 ### Delete server (you trusted)
 1. delete public key in GunPG Client
-2. delete public key in fold "TrustPublicKey"
+2. delete public key in folder "TrustPublicKey"
 
 ### Other functions
 1. get_submit_detail.py It's used to get a detail of a submission , through its submit uuid
