@@ -65,7 +65,7 @@ Windows
 9. old ban list will be saved in fold "backup"
 
 ### Create / delete submit
-1. you need to register first. run register.py to register a server
+1. you need to register first. run register.py to register yourself
 2. run new_submit.py to create a new submit
 3. all submits will be saved to file "submit,json"
 4. run delete_submit.py to delete a submit
