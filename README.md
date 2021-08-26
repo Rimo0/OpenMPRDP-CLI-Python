@@ -1,4 +1,4 @@
-# OpenMPRDP-CLI-Python
+# OpenMPRDB-CLI-Python
 
 A Python based MPRDB client
 
