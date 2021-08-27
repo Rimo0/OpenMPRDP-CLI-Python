@@ -28,14 +28,14 @@ for items in banlist:  # type(items)=dict
 
 banamount = 0  # For progress bar
 for player_uuid in reputation:
-    if reputation[player_uuid] < min_point_toban:
+    if reputation[player_uuid] <= min_point_toban:
         if player_uuid not in already_exist_player:
             banamount += 1
 i = 1
 # if a player in local reputation with a low point , and he isn't in the old ban list
 # he will be add to the new ban list
 for player_uuid in reputation:
-    if reputation[player_uuid] < min_point_toban:
+    if reputation[player_uuid] <= min_point_toban:
         if player_uuid not in already_exist_player:
             url = "https://sessionserver.mojang.com/session/minecraft/profile/" + player_uuid  # get player name
             # print(url)
