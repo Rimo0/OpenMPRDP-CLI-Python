@@ -5,6 +5,12 @@ import traceback
 import requests
 from retrying import retry
 
+import configparser
+import gnupg
+
+gpg = gnupg.GPG(gnupghome='./gnupg')
+conf = configparser.ConfigParser()
+
 linenum = 0
 sigstr = []
 keystr = []
@@ -12,13 +18,19 @@ sigfilename = "message.txt.asc"
 keyfilename = "public_key.asc"
 
 server_name = input("Input the server name:")
-with open("message.txt", 'r+') as f:
+with open("message.txt", 'r+', encoding='utf-8') as f:
     f.truncate(0)
     f.write("server_name:" + server_name)
 
 os.system("ren *_public.asc public_key.asc")
 os.system("del message.txt.asc")
-os.system("gpg -a --clearsign message.txt")
+
+# os.system("gpg -a --clearsign message.txt")
+
+conf.read('mprdb.ini')
+keyid = conf.get('mprdb', 'ServerKeyId')
+with open('message.txt', 'rb') as f:
+    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
 
 sigcount = 0
 for line in open(sigfilename):
@@ -90,7 +102,7 @@ if status == "OK":
         f.write(server_name)
         f.write("\n")
         f.write(uuid)
-    os.system('notepad server_uuid.txt')
+    # os.system('notepad server_uuid.txt')
 if status == "NG":
     print("400 Bad Request")
 
