@@ -27,7 +27,7 @@ for server in server_list:
 
     for submit in submit_list:
         submit_dir = file_dir + "/" + server + "/" + submit
-        with open(submit_dir, 'r') as f:
+        with open(submit_dir, 'r', encoding='utf-8') as f:
             content = f.read()
         uuid_index = content.find("player_uuid:")
         if content[uuid_index + 12] == " ":  # with space

@@ -5,6 +5,10 @@ import pandas as pd
 import requests
 from retrying import retry
 
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 100)
+pd.set_option('display.width', 1000)
+
 maxnum = "50"
 url = "https://test.openmprdb.org/v1/server/list" + "?limit=" + maxnum
 
@@ -24,7 +28,7 @@ except:
 
 response = _parse_url(url)
 res = response.json()
-# print json.loads('"%s"' %res) #typr(res)=dict
+# print json.loads('"%s"' %res) #type(res)=dict
 
 df = pd.DataFrame(res["servers"])
 df1 = df.loc[:, ['id', 'key_id', 'server_name', 'uuid']]  # hide key "public_key" here, it's useless now
