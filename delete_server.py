@@ -5,6 +5,11 @@ import time
 import traceback
 import requests
 from retrying import retry
+import configparser
+import gnupg
+
+gpg = gnupg.GPG(gnupghome='./gnupg')
+conf = configparser.ConfigParser()
 
 print("Only servers with no submit could be deleted using API.")
 server_uuid = ""
@@ -36,7 +41,12 @@ with open("message.txt", 'r+') as f:
     f.write("comment: " + comment)
 
 os.system("del message.txt.asc")
-os.system("gpg -a --clearsign message.txt")
+
+# os.system("gpg -a --clearsign message.txt")
+conf.read('mprdb.ini')
+keyid = conf.get('mprdb', 'ServerKeyId')
+with open('message.txt', 'rb') as f:
+    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
 
 url = "https://test.openmprdb.org/v1/server/uuid/" + server_uuid
 headers = {"Content-Type": "text/plain"}
