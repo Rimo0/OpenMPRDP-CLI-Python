@@ -9,9 +9,9 @@ Test server : https://test.openmprdb.org/
 
 # Environment
 
-Python 3.9
+Please do not use network proxy when running this client.
 
-GunPG Client
+Python 3.9
 
 Windows
 
