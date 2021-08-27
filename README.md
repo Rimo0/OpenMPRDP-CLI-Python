@@ -23,6 +23,8 @@ Windows
 
 3.pandas
 
+4.python-gnupg
+
 
 # Function
 
