@@ -6,10 +6,16 @@ import traceback
 import pandas as pd
 import requests
 from retrying import retry
+import configparser
+import gnupg
+
+gpg = gnupg.GPG(gnupghome='./gnupg')
+conf = configparser.ConfigParser()
 
 # load local server name and server uuid from local file
 server_uuid = ""
 count = 0
+line: str
 for line in open("server_uuid.txt"):
     count += 1
     if count == 1:
@@ -63,7 +69,12 @@ with open("message.txt", 'r+') as f:
     f.write("comment: " + comment)
 
 os.system("del message.txt.asc")
-os.system("gpg -a --clearsign message.txt")
+
+# os.system("gpg -a --clearsign message.txt")
+conf.read('mprdb.ini')
+keyid = conf.get('mprdb', 'ServerKeyId')
+with open('message.txt', 'rb') as f:
+    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
 
 url = "https://test.openmprdb.org/v1/submit/uuid/" + delete_uuid
 headers = {"Content-Type": "text/plain"}
