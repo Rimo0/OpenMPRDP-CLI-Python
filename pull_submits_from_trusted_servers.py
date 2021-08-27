@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
-import subprocess
 import time
 import traceback
 import requests
 from retrying import retry
+import configparser
+import gnupg
+
+gpg = gnupg.GPG(gnupghome='./gnupg')
+conf = configparser.ConfigParser()
 
 start = time.time()
 count = 0
@@ -62,18 +66,18 @@ for key in key_list:
             submit_all_count) + ">" + " --<Server:" + str(server_count) + "/" + str(server_all_count) + ">")
         with open("temp.txt", 'w+', encoding='utf-8') as f:
             f.write(content)
-        try:
-            result = subprocess.check_output("gpg --decrypt temp.txt", shell=True, stderr=subprocess.STDOUT,
-                                             stdin=subprocess.PIPE)  # gpg shell's output can't be got completely
-        except:
-            print("Solving submit " + str(submit_uuid) + " occurred an error! skip...")
-            error_submit.append(submit_uuid)
-            error_submit_server.append(key)
-            server_error = True
-            continue
-        # print(result)
-        resultcode = result.find(b"gpg: Good signature from")  # it only receives bits flow
-        if resultcode != -1:
+
+        # result = subprocess.check_output("gpg --decrypt temp.txt", shell=True, stderr=subprocess.STDOUT,
+        # stdin=subprocess.PIPE)  # gpg shell's output can't be got completely
+        verify = False
+        with open('temp.txt', 'rb') as f:
+            verified = gpg.verify_file(f)
+        if not verified:
+            verify = False
+        else:
+            verify = True
+
+        if verify:
             print("Good Signature. Saving....")
             path_name = './TrustPlayersList/' + server_uuid
             if not os.path.exists(path_name):
