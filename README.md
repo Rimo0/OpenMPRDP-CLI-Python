@@ -19,7 +19,7 @@ Windows
 
 1.requests
 
-2.retry
+2.retrying
 
 3.pandas
 
