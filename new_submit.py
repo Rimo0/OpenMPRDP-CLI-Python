@@ -5,6 +5,11 @@ import time
 import traceback
 import requests
 from retrying import retry
+import configparser
+import gnupg
+
+gpg = gnupg.GPG(gnupghome='./gnupg')
+conf = configparser.ConfigParser()
 
 server_uuid = ""
 player_uuid = ""
@@ -108,7 +113,12 @@ with open("message.txt", 'r+', encoding='utf-8') as f:
     f.write("comment: " + comment)
 
 os.system("del message.txt.asc")
-os.system("gpg -a --clearsign message.txt")
+# os.system("gpg -a --clearsign message.txt")
+
+conf.read('mprdb.ini')
+keyid = conf.get('mprdb', 'ServerKeyId')
+with open('message.txt', 'rb') as f:
+    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
 
 url = "https://test.openmprdb.org/v1/submit/new"
 headers = {"Content-Type": "text/plain"}
