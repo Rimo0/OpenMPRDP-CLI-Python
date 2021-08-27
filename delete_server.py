@@ -12,15 +12,11 @@ gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
 
 print("Only servers with no submit could be deleted using API.")
-server_uuid = ""
-count = 0
-for line in open("server_uuid.txt"):
-    count += 1
-    if count == 1:
-        server_name: str = line
-    if count == 2:
-        server_uuid = line
-        break
+
+conf.read('mprdb.ini')
+server_uuid = conf.get('mprdb', 'serveruuid')
+server_name = conf.get('mprdb', 'servername')
+
 print("Server UUID:" + server_uuid)
 
 comment = input("Input the comment to delete:")
