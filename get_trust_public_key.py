@@ -3,6 +3,11 @@ import os
 import traceback
 import requests
 from retrying import retry
+import configparser
+import gnupg
+
+gpg = gnupg.GPG(gnupghome='./gnupg')
+conf = configparser.ConfigParser()
 
 maxnum = "50"
 url = "https://test.openmprdb.org/v1/server/list" + "?limit=" + maxnum
@@ -86,10 +91,13 @@ while True:
             f.write(uuid_dict[server_uuid])
         command = "move " + server_uuid + " %cd%\\TrustPublicKey"  # move key file
         os.system(command)
-        command = "gpg --import %cd%\\TrustPublicKey\\" + server_uuid  # import key file
-        os.system(command)
+
+
+        filepath = "./TrustPublicKey/" + server_uuid  # import key file
+        key_data = open(filepath).read()
+        import_result = gpg.import_keys(key_data)
+        print(import_result.results)
+
     if choice == "3":
         with open(file_name, 'w') as f:
             f.write(uuid_dict[server_uuid])
-
-input("Press any key to exit")
