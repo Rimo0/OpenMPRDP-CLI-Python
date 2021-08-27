@@ -4,8 +4,12 @@ import os
 import time
 import requests
 from retrying import retry
+import configparser
 
-min_point_toban = 0
+conf = configparser.ConfigParser()
+
+conf.read('mprdb.ini')
+min_point_toban = conf.get('mprdb', 'min_point_toban')
 file_server_banlist = "banned-players.json"
 file_reputation = "reputation.json"
 source = "OpenMPRDB"
