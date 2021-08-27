@@ -13,16 +13,9 @@ gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
 
 # load local server name and server uuid from local file
-server_uuid = ""
-count = 0
-line: str
-for line in open("server_uuid.txt"):
-    count += 1
-    if count == 1:
-        server_name = line
-    if count == 2:
-        server_uuid = line
-        break
+conf.read('mprdb.ini')
+server_uuid = conf.get('mprdb', 'serveruuid')
+server_name = conf.get('mprdb', 'servername')
 print("Server UUID:" + server_uuid)
 
 # standardize json
