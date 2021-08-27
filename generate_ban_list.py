@@ -9,12 +9,12 @@ import configparser
 conf = configparser.ConfigParser()
 
 conf.read('mprdb.ini')
-min_point_toban = conf.get('mprdb', 'min_point_toban')
+min_point_toban = float(conf.get('mprdb', 'min_point_toban'))
 file_server_banlist = "banned-players.json"
 file_reputation = "reputation.json"
-source = "OpenMPRDB"
-expires = "forever"
-reason = "Bad reputation"
+source = conf.get('mprdb', 'ban_source')
+expires = conf.get('mprdb', 'ban_expires')
+reason = conf.get('mprdb', 'ban_reason')
 
 # load old ban list and local reputation
 with open(file_reputation, "r", encoding='utf-8') as f:
