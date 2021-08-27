@@ -98,11 +98,10 @@ if status == "OK":
     uuid = res.get("uuid")
     print("\nRegistration succeeded! The UUID of the current device is:")
     print(uuid)
-    with open("server_uuid.txt", "w") as f:
-        f.write(server_name)
-        f.write("\n")
-        f.write(uuid)
-    # os.system('notepad server_uuid.txt')
+    conf.read('mprdb.ini')
+    conf.set('mprdb', 'ServerName', server_name)
+    conf.set('mprdb', 'ServerUUID', uuid)
+    conf.write(open('mprdb.ini', 'w'))
 if status == "NG":
     print("400 Bad Request")
 
