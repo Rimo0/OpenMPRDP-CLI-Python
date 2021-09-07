@@ -13,7 +13,6 @@ Please do not use network proxy when running this client.
 
 Python 3.9
 
-Windows
 
 # Python components
 
