@@ -5,6 +5,10 @@ import json
 file_dir = "TrustPublicKey"
 new_key_list=os.listdir(file_dir) 
 
+if not os.path.exists('weight,json'):
+    with open('weight.json','w+') as f:
+        f.write('{}')
+
 with open("weight.json",'r') as f:
     old_key_list=json.loads(f.read())
 
