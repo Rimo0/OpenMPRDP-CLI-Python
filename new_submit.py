@@ -11,8 +11,9 @@ import gnupg
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
 
-
-
+if not os.path.exists('message.txt'):
+    with open('message.txt','w+') as f:
+        f.write('')
 
 player_uuid = ""
 player_name = ""
