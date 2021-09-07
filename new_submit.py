@@ -12,9 +12,10 @@ gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
 
 
+
+
 player_uuid = ""
 player_name = ""
-
 conf.read('mprdb.ini')
 server_uuid = conf.get('mprdb', 'serveruuid')
 server_name = conf.get('mprdb', 'servername')
@@ -110,13 +111,15 @@ with open("message.txt", 'r+', encoding='utf-8') as f:
     f.write("\n")
     f.write("comment: " + comment)
 
-os.system("del message.txt.asc")
+# os.system("del message.txt.asc")
 # os.system("gpg -a --clearsign message.txt")
 
 conf.read('mprdb.ini')
 keyid = conf.get('mprdb', 'ServerKeyId')
+passphrase=input('input passphrase: ')
+# in windows ,a pop will rise to enter the passphrase,others will not.
 with open('message.txt', 'rb') as f:
-    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
+    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc',passphrase=passphrase)
 
 url = "https://test.openmprdb.org/v1/submit/new"
 headers = {"Content-Type": "text/plain"}
@@ -139,6 +142,13 @@ response = _parse_url(url, data, headers)
 res = response.json()
 print(json.loads('"%s"' % res))  # type(res)=dict
 
+if not os.path.exists('submit.json'):
+    with open('submit.json','w+') as f:
+        f.write('{}')
+
+commit={}
+print(type(commit))
+
 # check status
 status = res.get("status")
 if status == "OK":
@@ -146,16 +156,17 @@ if status == "OK":
     print("\nSubmitted successfully! The UUID submitted this time is:")
     print(submit_uuid)
     eventtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    with open('submit.json', 'a+') as f:
-        f.write("\n")
-        f.write("\"")
-        f.write(submit_uuid)
-        f.write("\":")
-        f.write(json.dumps(  # Save the operation to the log file
-            {'Name': player_name, 'PlayerUUID': player_uuid, 'Points': points, 'Timestamp': ticks, 'Time': eventtime,
-             'Comment': comment, 'SubmitUUID': submit_uuid, 'ServerUUID': server_uuid}, sort_keys=False, indent=4,
-            separators=(',', ': ')))
-        f.write(",")
+
+    with open('submit.json','r',encoding='utf-8') as f:
+        commit=json.loads(f.read())
+
+    info = {'Name': player_name, 'PlayerUUID': player_uuid, 'Points': points, 'Timestamp': ticks, 'Time': eventtime,
+         'Comment': comment, 'SubmitUUID': submit_uuid, 'ServerUUID': server_uuid}
+    commit[submit_uuid]=info
+
+    with open('submit.json','w+',encoding='utf-8') as fd:
+        fd.write(json.dumps(commit, indent=4, ensure_ascii=False))
+
 if status == "NG":
     print("400 Bad Request or 401 Unauthorized")
 

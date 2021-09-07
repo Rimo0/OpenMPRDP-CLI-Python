@@ -5,6 +5,7 @@ import requests
 from retrying import retry
 import configparser
 import gnupg
+import shutil
 
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
@@ -60,7 +61,7 @@ for items in res["servers"]:
 # get server uuid from server name, or conversely
 while True:
     while True:
-        i = os.system("cls")
+        # i = os.system("cls")
         serverid = input("Input the server FULL UUID or server key ID: ")
         # print(len("2512ab29a00e8686")) #16
         if len(serverid) == 16:
@@ -89,8 +90,9 @@ while True:
     if choice == "1":
         with open(file_name, 'w') as f:
             f.write(uuid_dict[server_uuid])
-        command = "move " + server_uuid + " %cd%\\TrustPublicKey"  # move key file
-        os.system(command)
+        shutil.move(server_uuid,"TrustPublicKey")
+        # command = "move " + server_uuid + " %cd%\\TrustPublicKey"  # move key file
+        # os.system(command)
 
 
         filepath = "./TrustPublicKey/" + server_uuid  # import key file

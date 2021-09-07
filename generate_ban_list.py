@@ -3,8 +3,28 @@ import json
 import os
 import time
 import requests
+import shutil
 from retrying import retry
 import configparser
+
+
+def backup():
+# backup old ban list
+    timepoint = str(time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    if not os.path.exists("backup"):
+        os.makedirs("backup")
+    filename = "banned-players-backup-" + timepoint + ".json"
+    os.rename('banned-players.json', filename)
+    shutil.copy(filename, "backup/")
+    os.rename(filename, 'banned-players.json')
+
+
+
+def new_list(i):
+# create new ban list
+    with open("banned-players.json", "w+", encoding='utf-8') as fp:
+        fp.write(json.dumps(banlist, indent=4, ensure_ascii=False))
+
 
 conf = configparser.ConfigParser()
 
@@ -15,6 +35,7 @@ file_reputation = "reputation.json"
 source = conf.get('mprdb', 'ban_source')
 expires = conf.get('mprdb', 'ban_expires')
 reason = conf.get('mprdb', 'ban_reason')
+changed = False
 
 # load old ban list and local reputation
 with open(file_reputation, "r", encoding='utf-8') as f:
@@ -37,7 +58,8 @@ i = 1
 for player_uuid in reputation:
     if reputation[player_uuid] <= min_point_toban:
         if player_uuid not in already_exist_player:
-            url = "https://sessionserver.mojang.com/session/minecraft/profile/" + player_uuid  # get player name
+            url = "https://sessionserver.mojang.com/session/minecraft/profile/" + \
+                player_uuid  # get player name
             # print(url)
             try:
                 @retry(stop_max_attempt_number=3)
@@ -45,39 +67,41 @@ for player_uuid in reputation:
                     res = requests.get(url)
                     return res
 
-
                 res = _parse_url(url)
             except:
                 print("An error occurred while searching the player.Try again later.")
+                if changed:
+                    print('Solved '+str(i)+' item<s>.')
+                    backup()
+                    new_list(i)
+                else:
+                    print('Nothing Changed.')
                 exit()
             if res.text == "":
-                print("Player: " + player_uuid + " not found! < "+str(i)+" / "+str(banamount)+" >")
+                print("Player: " + player_uuid + " not found! < " +
+                      str(i)+" / "+str(banamount)+" >")
                 i += 1
                 continue
             else:
                 result = res.json()
                 player_name = result["name"]
-                print("Now adding player: " + player_name + " ,UUID: " + player_uuid + " to ban list. < "+str(i)+" / "+str(banamount)+" >")
-                created = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + " +0800"
+                print("Now adding player: " + player_name + " ,UUID: " +
+                      player_uuid + " to ban list. < "+str(i)+" / "+str(banamount)+" >")
+                created = str(time.strftime("%Y-%m-%d %H:%M:%S",
+                              time.localtime())) + " +0800"
                 info = {'uuid': player_uuid, 'name': player_name, 'created': created, 'source': source,
                         'expires': expires, 'reason': reason}
                 # print(info)
                 banlist.append(info)  # new ban list
                 # print(banlist)
                 i += 1
+                changed = True
 
-# backup old ban list
-time = str(time.strftime("%Y%m%d-%H%M%S", time.localtime()))
-if not os.path.exists("backup"):
-    os.makedirs("backup")
+if changed:
+    print('Solved '+str(i)+' item<s>.')
+    backup()
+    new_list(i)
+else:
+    print('Nothing changed.')
 
-filename = "banned-players-backup-" + time + ".json"
-command = "ren banned-players.json " + filename
-os.system(command)
-command = "move " + filename + " ./backup/"
-os.system(command)
-
-# create new ban list
-with open("banned-players.json", "w+", encoding='utf-8') as fp:
-    fp.write(json.dumps(banlist, indent=4, ensure_ascii=False))
 input("Press any key to exit.")

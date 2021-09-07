@@ -22,16 +22,19 @@ with open("message.txt", 'r+', encoding='utf-8') as f:
     f.truncate(0)
     f.write("server_name:" + server_name)
 
-os.system("ren *_public.asc public_key.asc")
-os.system("del message.txt.asc")
+# os.system("ren *_public.asc public_key.asc")
+# os.system("del message.txt.asc")
 
 # os.system("gpg -a --clearsign message.txt")
 
 conf.read('mprdb.ini')
+passphrase=input('input passphrase: ')
+# in windows ,a pop will rise to enter the passphrase,others will not.
+
 keyid = conf.get('mprdb', 'ServerKeyId')
 with open('message.txt', 'rb') as f:
-    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
-
+    status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc',passphrase=passphrase)
+	
 sigcount = 0
 for line in open(sigfilename):
     sigcount += 1
@@ -53,7 +56,8 @@ for line in open(keyfilename):
 signature = "-----BEGIN PGP SIGNATURE-----\n\n"
 for num in range(6, sigcount - 2):
     signature = signature + sigstr[num]
-signature = signature + "\n" + sigstr[sigcount - 2] + "\n-----END PGP SIGNATURE-----"
+signature = signature + "\n" + \
+    sigstr[sigcount - 2] + "\n-----END PGP SIGNATURE-----"
 
 message = "-----BEGIN PGP SIGNED MESSAGE-----\n"
 message = message + sigstr[1] + "\n\n" + sigstr[3] + "\n" + signature
@@ -68,9 +72,11 @@ pubkey = pubkey + "\n" + keystr[-2] + "\n-----END PGP PUBLIC KEY BLOCK-----"
 
 
 with open('register.json', 'w') as f:
-    f.write(json.dumps({'message': message, 'public_key': pubkey}, sort_keys=True, indent=2, separators=(',', ': ')))
+    f.write(json.dumps({'message': message, 'public_key': pubkey},
+            sort_keys=True, indent=2, separators=(',', ': ')))
 
-data = json.dumps({'message': message, 'public_key': pubkey}, sort_keys=True, indent=2, separators=(',', ': '))
+data = json.dumps({'message': message, 'public_key': pubkey},
+                  sort_keys=True, indent=2, separators=(',', ': '))
 print(data)
 
 url = "https://test.openmprdb.org/v1/server/register"
