@@ -7,8 +7,9 @@ import shutil
 from retrying import retry
 import configparser
 
-if not os.path.exists('backup'):
-    os.mkdir('backup')
+if not os.path.exists('banned-players.json'):
+    with open('banned-players.json','w+') as f:
+        f.write('[]')
 
 def backup():
 # backup old ban list
