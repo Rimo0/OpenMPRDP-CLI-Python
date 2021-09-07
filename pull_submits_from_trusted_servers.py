@@ -6,6 +6,7 @@ import requests
 from retrying import retry
 import configparser
 import gnupg
+import shutil
 
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
@@ -30,7 +31,8 @@ for key in key_list:
     server_count += 1
     submit_count = 0
     print("=====================")
-    print("Now loading server :" + key + " --<Server:" + str(server_count) + "/" + str(server_all_count) + ">")
+    print("Now loading server :" + key + " --<Server:" +
+          str(server_count) + "/" + str(server_all_count) + ">")
     url = "https://test.openmprdb.org/v1/submit/server/" + key
 
     try:
@@ -82,10 +84,12 @@ for key in key_list:
             path_name = './TrustPlayersList/' + server_uuid
             if not os.path.exists(path_name):
                 os.makedirs(path_name)
-            command = "move temp.txt ./TrustPlayersList/" + server_uuid  # move submit file
-            os.system(command)
-            command = "ren TrustPlayersList\\" + server_uuid + "\\temp.txt " + submit_uuid  # rename
-            os.system(command)
+            try:
+                os.rename('temp.txt', submit_uuid)
+                shutil.move(submit_uuid, path_name)
+            except:
+                print("Already Saved.Skip..")
+                os.remove(submit_uuid)
             count += 1
         else:
             print(str(submit_uuid) + " is not valid! skip...")
@@ -103,10 +107,12 @@ print("=====================")
 
 # print error servers
 if len(error_key) >= 1:
-    print("There was a problem pulling submissions from the following " + str(len(error_key)) + " server<s>")
+    print("There was a problem pulling submissions from the following " +
+          str(len(error_key)) + " server<s>")
     i = 0
     for items in error_key:
-        print("Server UUID: " + str(items) + " ,HTTPcode=" + str(error_code[i]))
+        print("Server UUID: " + str(items) +
+              " ,HTTPcode=" + str(error_code[i]))
         i += 1
 else:
     print("All servers responded correctly.")
@@ -117,7 +123,8 @@ if len(error_submit) >= 1:
     print("There was a problem verifying the signatures of the following " + str(
         len(error_submit)) + " submit<s>,from " + str(error_submit_server_count) + " server<s>")
     i = 0
-    error_submit_server.append(error_submit_server[0])  # solving the foling i-1
+    # solving the foling i-1
+    error_submit_server.append(error_submit_server[0])
     print("\n")
     print("  >> from server: " + error_submit_server[0])
     for items in error_submit:
