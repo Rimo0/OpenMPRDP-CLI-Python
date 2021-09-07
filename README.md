@@ -24,6 +24,7 @@ Python 3.9
 
 4.python-gnupg
 
+or using `pip install -r requirements.txt`
 
 # Function
 
