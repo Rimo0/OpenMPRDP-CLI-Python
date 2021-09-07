@@ -7,6 +7,9 @@ import configparser
 import gnupg
 import shutil
 
+if not os.path.exists('TrustPublicKey'):
+    os.mkdir('TrustPublicKey')
+
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
 

@@ -2,6 +2,10 @@
 import gnupg
 import pandas as pd
 import configparser
+import os
+
+if not os.path.exists('gnupg'):
+    os.mkdir('gnupg')
 
 conf = configparser.ConfigParser()
 gpg = gnupg.GPG(gnupghome='./gnupg')

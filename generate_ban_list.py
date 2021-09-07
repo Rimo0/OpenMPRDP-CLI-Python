@@ -7,6 +7,8 @@ import shutil
 from retrying import retry
 import configparser
 
+if not os.path.exists('backup'):
+    os.mkdir('backup')
 
 def backup():
 # backup old ban list
