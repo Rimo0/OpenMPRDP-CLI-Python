@@ -88,7 +88,7 @@ def search_online(player_uuid, i,changed):  # return (name or code,i)
 conf = configparser.ConfigParser()
 conf.read('mprdb.ini')
 min_point_toban = float(conf.get('mprdb', 'min_point_toban'))
-file_server_banlist = "banned-players.json"
+file_server_banlist = conf.get('mprdb','banlist_path')
 file_reputation = "reputation.json"
 source = conf.get('mprdb', 'ban_source')
 expires = conf.get('mprdb', 'ban_expires')
@@ -119,7 +119,7 @@ for player_uuid in reputation:
             player_name = players_map_get(player_uuid)
             i += 1
         else:
-            player_name, i = search_online(player_uuid, i)
+            player_name, i = search_online(player_uuid, i,changed)
             if player_name == '-3':
                 print("An error occurred while searching the player.Try again later.")
                 print('Nothing changed.')
