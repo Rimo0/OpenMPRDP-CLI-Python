@@ -53,7 +53,7 @@ def new_list(i):
     return 0
 
 
-def search_online(player_uuid, i):  # return (name or code,i)
+def search_online(player_uuid, i,changed):  # return (name or code,i)
     url = "https://sessionserver.mojang.com/session/minecraft/profile/" + \
         player_uuid  # get player name
     # print(url)
