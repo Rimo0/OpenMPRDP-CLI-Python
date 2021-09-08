@@ -110,13 +110,14 @@ for player_uuid in reputation:
     if reputation[player_uuid] <= min_point_toban:
         if player_uuid not in already_exist_player:
             banamount += 1
-i = 1
+i = 0
 # if a player in local reputation with a low point , and he isn't in the old ban list
 # he will be add to the new ban list
 for player_uuid in reputation:
     if reputation[player_uuid] <= min_point_toban and player_uuid not in already_exist_player:
         if players_map_get(player_uuid) != '-1':
             player_name = players_map_get(player_uuid)
+            i += 1
         else:
             player_name, i = search_online(player_uuid, i)
             if player_name == '-3':
@@ -132,6 +133,7 @@ for player_uuid in reputation:
                       str(i)+" / "+str(banamount)+" >")
                 continue
             players_map_save(player_uuid,player_name)
+            i += 1
 
         print("Now adding player: " + player_name + " ,UUID: " +
               player_uuid + " to ban list. < "+str(i)+" / "+str(banamount)+" >")
@@ -142,11 +144,10 @@ for player_uuid in reputation:
         # print(info)
         banlist.append(info)  # new ban list
         # print(banlist)
-        i += 1
         changed = True
 
 if changed:
-    print('Solved '+str(i-1)+' item<s>.')
+    print('Solved '+str(i)+' item<s>.')
     backup()
     new_list(i)
 else:
