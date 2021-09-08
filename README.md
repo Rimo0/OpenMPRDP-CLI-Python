@@ -11,7 +11,7 @@ Test server : https://test.openmprdb.org/
 
 Please do not use network proxy when running this client.
 
-Python 3.9
+Python 3 or later
 
 
 # Python components
