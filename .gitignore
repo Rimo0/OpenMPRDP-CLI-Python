@@ -1,14 +1,10 @@
 /TrustPlayersList/
 /gnupg/
 /TrustPublicKey/
+/backup/
 *.asc
-weight.json
+*.json
 *-*-*-*-*
 message.txt
 mprdb.ini
 ..gitignore.swp
-submit.json
-submit-others.json
-reputation.json
-banned-players.json
-register.json
