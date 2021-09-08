@@ -7,13 +7,10 @@ import shutil
 from retrying import retry
 import configparser
 
+
 if not os.path.exists('players_map.json'):
     with open('players_map.json', 'w+') as f:
         f.write('{}')
-
-if not os.path.exists('banned-players.json'):
-    with open('banned-players.json', 'w+') as f:
-        f.write('[]')
 
 
 def backup():
@@ -50,10 +47,15 @@ def new_list(i):
     # create new ban list
     with open("banned-players.json", "w+", encoding='utf-8') as fp:
         fp.write(json.dumps(banlist, indent=4, ensure_ascii=False))
+    try:
+        shutil.copy('banned-players.json',file_server_banlist)
+        print('Copying file to server folder...')
+    except:
+        print('Unable to copy file to server folder.')
     return 0
 
 
-def search_online(player_uuid, i,changed):  # return (name or code,i)
+def search_online(player_uuid, i, changed):  # return (name or code,i)
     url = "https://sessionserver.mojang.com/session/minecraft/profile/" + \
         player_uuid  # get player name
     # print(url)
@@ -88,17 +90,26 @@ def search_online(player_uuid, i,changed):  # return (name or code,i)
 conf = configparser.ConfigParser()
 conf.read('mprdb.ini')
 min_point_toban = float(conf.get('mprdb', 'min_point_toban'))
-file_server_banlist = conf.get('mprdb','banlist_path')
+file_server_banlist = conf.get('mprdb', 'banlist_path')
 file_reputation = "reputation.json"
 source = conf.get('mprdb', 'ban_source')
 expires = conf.get('mprdb', 'ban_expires')
 reason = conf.get('mprdb', 'ban_reason')
 changed = False
 
+try:
+    shutil.copy(file_server_banlist, os.getcwd())
+    print('Server ban list found,using list: '+file_server_banlist)
+except:
+    print('Server ban list not found!Generating...')
+    if not os.path.exists('banned-players.json'):
+        with open('banned-players.json', 'w+') as f:
+            f.write('[]')
+
 # load old ban list and local reputation
 with open(file_reputation, "r", encoding='utf-8') as f:
     reputation = json.loads(f.read())
-with open(file_server_banlist, "r", encoding='utf-8') as d:
+with open('banned-players.json', "r", encoding='utf-8') as d:
     banlist = json.loads(d.read())
 
 already_exist_player = []  # Prevent duplication
@@ -119,7 +130,7 @@ for player_uuid in reputation:
             player_name = players_map_get(player_uuid)
             i += 1
         else:
-            player_name, i = search_online(player_uuid, i,changed)
+            player_name, i = search_online(player_uuid, i, changed)
             if player_name == '-3':
                 print("An error occurred while searching the player.Try again later.")
                 print('Nothing changed.')
@@ -132,7 +143,7 @@ for player_uuid in reputation:
                 print("Player: " + player_uuid + " not found! < " +
                       str(i)+" / "+str(banamount)+" >")
                 continue
-            players_map_save(player_uuid,player_name)
+            players_map_save(player_uuid, player_name)
             i += 1
 
         print("Now adding player: " + player_name + " ,UUID: " +

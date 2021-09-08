@@ -61,7 +61,7 @@ or using `pip install -r requirements.txt`
 3. run `weight_management.py` to set weights for trusted servers
 4. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
 5. run `generate_reputation_list.py` to generate a local reputation database
-6. copy the old ban list from your server folder to the OpenMPRDB home directory
+6. modify this parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
 7. modify this parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
 8. run `generate_ban_list.py` to generate a new ban list
 9. old ban list will be saved in folder `backup`
