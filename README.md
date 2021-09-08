@@ -88,7 +88,7 @@ or using `pip install -r requirements.txt`
 1. `get_submit_detail.py` It's used to get a detail of a submission , through its `submit uuid`
 2. `get_submit_from_other_servers.py` It's used to get all submits from a specific server ,  through its `server uuid`
 3. `key_management.py` Key management
-4.` reputation.json` The local reputation base
+4. `reputation.json` The local reputation base
 5. `submit.json` The submits logs
 6. `submit-others.json` The logs except submits,such as delete server
 7. `weight.json` The local weight base
