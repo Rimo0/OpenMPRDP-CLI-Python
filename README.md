@@ -72,7 +72,7 @@ or using `pip install -r requirements.txt`
 3. copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
 4. then you need to register first. run `register.py` to register yourself
 5. run `new_submit.py` to create a new submit
-6. all submits will be saved to file `submit,json`
+6. all submits will be saved to file `submit.json`
 7. run `delete_submit.py` to delete a submit
 
 ### Delete server (yourself)
@@ -81,7 +81,7 @@ or using `pip install -r requirements.txt`
 
 ### Delete server (you trusted)
 1. run `key_management.py` and command `list` to list all the keys
-2. delete public key in `key_management.py` , use command `del` , with its key `fingerprint`
+2. delete public key in `key_management.py` , use command `del` , with its key's `fingerprint`
 3. delete public key in folder `TrustPublicKey` , with its `server uuid`
 
 ### Other functions
