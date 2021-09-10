@@ -41,7 +41,12 @@ passphrase=input('input passphrase: ')
 keyid = conf.get('mprdb', 'ServerKeyId')
 with open('message.txt', 'rb') as f:
     status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc',passphrase=passphrase)
-	
+
+if not os.path.exists('message.txt.asc'):
+    print('Failed to sign file.')
+    print('Did you generate a key pair and edit the mprdb.ini file?')
+    exit()
+
 sigcount = 0
 for line in open(sigfilename):
     sigcount += 1

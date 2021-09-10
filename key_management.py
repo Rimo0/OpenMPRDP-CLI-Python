@@ -1,4 +1,4 @@
-﻿# -- coding: utf-8 --
+# -- coding: utf-8 --
 import gnupg
 import pandas as pd
 import configparser
@@ -92,7 +92,7 @@ def sign_file():
     conf.read('mprdb.ini')
     keyid = conf.get('mprdb', 'ServerKeyId')
     with open('message.txt', 'rb') as f:
-        status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
+        gpg.sign_file(f, keyid=keyid, output='message.txt.asc')
     return
 
 
