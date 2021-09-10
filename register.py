@@ -8,6 +8,9 @@ from retrying import retry
 import configparser
 import gnupg
 
+if not os.path.exists('gnupg'):
+    os.mkdir('gnupg')
+
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
 
