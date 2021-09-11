@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import time
 
 file_dir = "TrustPublicKey"
 new_key_list=os.listdir(file_dir) 
@@ -39,4 +40,5 @@ for items in wait_to_weight_list:
 with open("weight.json", "w") as fp:
     fp.write(json.dumps(old_key_list,indent=4))
 print("Finisned")
-input("Press any key to exit")
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)

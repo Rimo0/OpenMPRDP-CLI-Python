@@ -7,6 +7,7 @@ import configparser
 import gnupg
 import shutil
 import json
+import time
 
 def weight(server_uuid,point):
     if not os.path.exists('weight,json'):
@@ -135,3 +136,5 @@ while True:
     if choice == "3":
         with open(file_name, 'w') as f:
             f.write(uuid_dict[server_uuid])
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)

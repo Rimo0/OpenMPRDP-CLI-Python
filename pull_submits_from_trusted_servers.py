@@ -138,4 +138,6 @@ if len(error_submit) >= 1:
 else:
     print("All signatures have been verified well and saved.")
 print("\n")
-input("Finished! Press any key to exit.")
+
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)

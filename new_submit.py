@@ -171,4 +171,5 @@ if status == "OK":
 if status == "NG":
     print("400 Bad Request or 401 Unauthorized")
 
-input("Press any key to exit")
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)

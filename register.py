@@ -3,6 +3,7 @@ import json
 import os
 import traceback
 import requests
+import time
 from retrying import retry
 
 import configparser
@@ -123,4 +124,5 @@ if status == "OK":
 if status == "NG":
     print("400 Bad Request")
 
-input("Press any key to exit")
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)

@@ -164,4 +164,5 @@ if changed:
 else:
     print('Nothing changed.')
 
-input("Press any key to exit.")
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)

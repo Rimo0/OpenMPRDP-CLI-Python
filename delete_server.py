@@ -92,4 +92,5 @@ if status == "OK":
 if status == "NG":
     print("Server not found,or Unauthorized")
 
-input("Press any key to exit")
+print("Finished! Exitting in 10 seconds...")
+time.sleep(10)
