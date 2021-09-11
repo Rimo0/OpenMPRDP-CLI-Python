@@ -9,7 +9,7 @@ Test server : https://test.openmprdb.org/
 
 # Environment
 
-Please do not use network proxy when running this client.
+Using network proxy may cause some errors.
 
 Python 3 or later
 
@@ -24,7 +24,7 @@ Python 3 or later
 
 4.python-gnupg
 
-or using `pip install -r requirements.txt`
+install then manually or use `pip install -r requirements.txt`
 
 # Function
 
@@ -73,7 +73,6 @@ The old ban list will be saved in folder `backup`
 1. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
 2. run `generate_reputation_list.py` to generate a local reputation database
 3. run `generate_ban_list.py` to generate a new ban list
-
 
 ### Create / delete submit
 1. run `new_submit.py` to create a new submit
