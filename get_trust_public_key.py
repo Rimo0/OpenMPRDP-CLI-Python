@@ -6,6 +6,21 @@ from retrying import retry
 import configparser
 import gnupg
 import shutil
+import json
+
+def weight(server_uuid,point):
+    if not os.path.exists('weight,json'):
+    	with open('weight.json','w+') as f:
+        	f.write('{}')
+    
+    with open("weight.json",'r') as f:
+        key_list=json.loads(f.read())
+
+    key_list[server_uuid]=point
+    
+    with open("weight.json", "w") as fp:
+        fp.write(json.dumps(key_list,indent=4))
+    return 0
 
 if not os.path.exists('TrustPublicKey'):
     os.mkdir('TrustPublicKey')
@@ -65,8 +80,11 @@ for items in res["servers"]:
 while True:
     while True:
         # i = os.system("cls")
+        print('Command 0 to exit.')
         serverid = input("Input the server FULL UUID or server key ID: ")
         # print(len("2512ab29a00e8686")) #16
+        if serverid == '0':
+            exit()
         if len(serverid) == 16:
             server_name = keyid_name_dict[serverid]
             server_uuid = keyid_uuid_dict[serverid]
@@ -93,7 +111,10 @@ while True:
     if choice == "1":
         with open(file_name, 'w') as f:
             f.write(uuid_dict[server_uuid])
-        shutil.move(server_uuid,"TrustPublicKey")
+        try:
+            shutil.move(server_uuid,"TrustPublicKey")
+        except:
+            print('Already saved.')
         # command = "move " + server_uuid + " %cd%\\TrustPublicKey"  # move key file
         # os.system(command)
 
@@ -102,6 +123,13 @@ while True:
         key_data = open(filepath).read()
         import_result = gpg.import_keys(key_data)
         print(import_result.results)
+        while True:
+            point=float(input("Input the weight,from 0 to 5,except 0 :"))
+            if point>5 or point<=0:
+                print("Illegal input, please re-enter")
+                continue
+            break
+        weight(server_uuid,point)
 
     if choice == "3":
         with open(file_name, 'w') as f:
