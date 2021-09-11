@@ -164,5 +164,5 @@ if changed:
 else:
     print('Nothing changed.')
 
-print("Finished! Exitting in 10 seconds...")
-time.sleep(10)
+print("Finished! Exitting in 3 seconds...")
+time.sleep(3)

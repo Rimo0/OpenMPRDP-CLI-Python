@@ -66,10 +66,14 @@ or using `pip install -r requirements.txt`
 ### Pull from other servers
 1. run `get_all_server.py` to get a list of registered servers 
 2. run `get_trust_public_key`.py to download the public key of the server you want to trust
-3. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
-4. run `generate_reputation_list.py` to generate a local reputation database
-5. run `generate_ban_list.py` to generate a new ban list
+3. run `update.py` to update ban list.
 The old ban list will be saved in folder `backup`
+
+### If occured some errors,try the following components.
+1. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
+2. run `generate_reputation_list.py` to generate a local reputation database
+3. run `generate_ban_list.py` to generate a new ban list
+
 
 ### Create / delete submit
 1. run `new_submit.py` to create a new submit

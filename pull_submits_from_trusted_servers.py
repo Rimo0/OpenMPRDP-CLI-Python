@@ -139,5 +139,5 @@ else:
     print("All signatures have been verified well and saved.")
 print("\n")
 
-print("Finished! Exitting in 10 seconds...")
-time.sleep(10)
+print("Finished! Exitting in 3 seconds...")
+time.sleep(3)
