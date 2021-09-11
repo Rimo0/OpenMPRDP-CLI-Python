@@ -115,6 +115,7 @@ while True:
             shutil.move(server_uuid,"TrustPublicKey")
         except:
             print('Already saved.')
+            os.remove(server_uuid)
         # command = "move " + server_uuid + " %cd%\\TrustPublicKey"  # move key file
         # os.system(command)
 
