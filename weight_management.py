@@ -31,7 +31,8 @@ for items in wait_to_weight_list:
     while True:
         point=float(input("Input the weight,from 0 to 5,except 0 :"))
         if point>5 or point<=0:
-            print("Illegal input, please re-enter")   
+            print("Illegal input, please re-enter")
+            continue 
         break
     old_key_list[uuid]=point
     
