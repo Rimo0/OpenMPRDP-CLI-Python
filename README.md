@@ -55,28 +55,30 @@ or using `pip install -r requirements.txt`
 4. Each functional module is an independent file, which can be started as required.
 
 # Workflow
+### First to run
+1. run `key_management.py` and command `init` to generate a key pair
+2. run `key_management.py` and command `list` and copy your keyid
+3. copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
+5. modify the parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
+6. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
+7. then you need to register first. run `register.py` to register yourself
+
 ### Pull from other servers
 1. run `get_all_server.py` to get a list of registered servers 
 2. run `get_trust_public_key`.py to download the public key of the server you want to trust
 3. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
 4. run `generate_reputation_list.py` to generate a local reputation database
-5. modify the parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
-6. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
-7. run `generate_ban_list.py` to generate a new ban list
-8. old ban list will be saved in folder `backup`
+5. run `generate_ban_list.py` to generate a new ban list
+The old ban list will be saved in folder `backup`
 
 ### Create / delete submit
-1. run `key_management.py` and command `init` to generate a key pair
-2. run `key_management.py` and command `list` to get your keyid
-3. copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
-4. then you need to register first. run `register.py` to register yourself
-5. run `new_submit.py` to create a new submit
-6. all submits will be saved to file `submit.json`
-7. run `delete_submit.py` to delete a submit
+1. run `new_submit.py` to create a new submit
+all submits will be saved to file `submit.json`
+2. run `delete_submit.py` to delete a submit
 
 ### Delete server (yourself)
 1. run `delete_server.py` to delete the server yourself from the remote server
-2. you need to re-register later
+you need to re-register later
 
 ### Delete server (you trusted)
 1. run `key_management.py` and command `list` to list all the keys
