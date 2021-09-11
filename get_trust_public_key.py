@@ -105,7 +105,8 @@ while True:
     print("Public key block:\n")
     print(uuid_dict[server_uuid])
     print("\r")
-    print("Input 1 to save and import this public key, 2 to re-enter ,3 to only save this public key")
+    print('Input 1 to save and import this public key, 2 to re-enter')
+    print("3 to only save this public key, 0 to exit")
 
     choice = input("Input a number :")
     file_name = server_uuid
@@ -136,5 +137,8 @@ while True:
     if choice == "3":
         with open(file_name, 'w') as f:
             f.write(uuid_dict[server_uuid])
+    if choice == "0":
+    	break
+
 print("Finished! Exitting in 10 seconds...")
 time.sleep(10)
