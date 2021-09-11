@@ -58,13 +58,12 @@ or using `pip install -r requirements.txt`
 ### Pull from other servers
 1. run `get_all_server.py` to get a list of registered servers 
 2. run `get_trust_public_key`.py to download the public key of the server you want to trust
-3. run `weight_management.py` to set weights for trusted servers
-4. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
-5. run `generate_reputation_list.py` to generate a local reputation database
-6. modify this parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
-7. modify this parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
-8. run `generate_ban_list.py` to generate a new ban list
-9. old ban list will be saved in folder `backup`
+3. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
+4. run `generate_reputation_list.py` to generate a local reputation database
+5. modify the parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
+6. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
+7. run `generate_ban_list.py` to generate a new ban list
+8. old ban list will be saved in folder `backup`
 
 ### Create / delete submit
 1. run `key_management.py` and command `init` to generate a key pair
@@ -93,3 +92,4 @@ or using `pip install -r requirements.txt`
 6. `submit-others.json` The logs except submits,such as delete server
 7. `weight.json` The local weight base
 8. `players_map.json` Saved players uuid and name
+9. `weight_management.py` Set weight for servers that have not been weighted
