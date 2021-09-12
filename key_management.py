@@ -57,7 +57,7 @@ def key_generate():
 
 
 def key_import():
-    key_data = open('public_key.asc').read()
+    key_data = open('key.asc').read()
     import_result = gpg.import_keys(key_data)
     print(import_result.results)
     return

@@ -88,6 +88,14 @@ you need to re-register later
 2. delete public key in `key_management.py` , use command `del` , with its key's `fingerprint`
 3. delete public key in folder `TrustPublicKey` , with its `server uuid`
 
+### Import public key manually
+1. copy the key file to OpenMPRDB folder
+2. rename the key to `key.asc`
+3. run `key_management.py` and command `im`
+4. move `key.asc` to folder `TrustPublicKey` , rename it to its server's uuid
+5. run `weight_management.py` to set weight for it
+6. run `update.py` to update ban list
+
 ### Other functions
 1. `get_submit_detail.py` It's used to get a detail of a submission , through its `submit uuid`
 2. `get_submit_from_other_servers.py` It's used to get all submits from a specific server ,  through its `server uuid`
