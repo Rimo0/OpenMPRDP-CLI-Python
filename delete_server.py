@@ -7,6 +7,14 @@ import requests
 from retrying import retry
 import configparser
 import gnupg
+import argparse
+
+parser = argparse.ArgumentParser(description="Delete server self")
+parser.add_argument('-r','--reason', default='None')
+parser.add_argument('-p','--passphrase', default='None')
+args = parser.parse_args()
+comment = args.reason
+passphrase = args.passphrase
 
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
@@ -23,7 +31,8 @@ server_name = conf.get('mprdb', 'servername')
 
 print("Server UUID:" + server_uuid)
 
-comment = input("Input the comment to delete:")
+if comment == 'None':
+    comment = input("Input the comment to delete:")
 
 print("\r")
 print("=====Confirm to delete server=====")
@@ -47,6 +56,8 @@ conf.read('mprdb.ini')
 keyid = conf.get('mprdb', 'ServerKeyId')
 if conf.get('mprdb','save_passphrase')=='True':
     passphrase=conf.get('mprdb','passphrase')
+elif passphrase != 'None':
+    passphrase = args.passphrase
 else:
     passphrase=input('input passphrase: ')
 # in windows ,a pop will rise to enter the passphrase,others will not.

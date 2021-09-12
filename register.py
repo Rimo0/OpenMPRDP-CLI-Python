@@ -5,9 +5,16 @@ import traceback
 import requests
 import time
 from retrying import retry
-
+import argparse
 import configparser
 import gnupg
+
+parser = argparse.ArgumentParser(description="Register")
+parser.add_argument('-n','--name', default='None')
+parser.add_argument('-p','--passphrase', default='None')
+args = parser.parse_args()
+server_name = args.name
+passphrase = args.passphrase
 
 if not os.path.exists('gnupg'):
     os.mkdir('gnupg')
@@ -25,7 +32,9 @@ keystr = []
 sigfilename = "message.txt.asc"
 keyfilename = "public_key.asc"
 
-server_name = input("Input the server name:")
+if server_name == 'None':
+    server_name = input("Input the server name:")
+
 with open("message.txt", 'r+', encoding='utf-8') as f:
     f.truncate(0)
     f.write("server_name:" + server_name)
@@ -38,6 +47,8 @@ with open("message.txt", 'r+', encoding='utf-8') as f:
 conf.read('mprdb.ini')
 if conf.get('mprdb','save_passphrase')=='True':
     passphrase=conf.get('mprdb','passphrase')
+elif passphrase != 'None':
+    passphrase = args.passphrase
 else:
     passphrase=input('input passphrase: ')
 # in windows ,a pop will rise to enter the passphrase,others will not.

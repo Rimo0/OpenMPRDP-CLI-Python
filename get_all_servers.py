@@ -4,12 +4,18 @@ import traceback
 import pandas as pd
 import requests
 from retrying import retry
+import argparse
 
+parser = argparse.ArgumentParser(description="get server lists")
+parser.add_argument('-m','--max', default=50)
+args = parser.parse_args()
+maxnum = str(args.max)
+
+# print(type(maxnum))
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 100)
 pd.set_option('display.width', 1000)
 
-maxnum = "50"
 url = "https://test.openmprdb.org/v1/server/list" + "?limit=" + maxnum
 
 print("Getting servers list...")

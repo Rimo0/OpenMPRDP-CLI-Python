@@ -9,6 +9,17 @@ from retrying import retry
 import configparser
 import gnupg
 import shutil
+import argparse
+
+parser = argparse.ArgumentParser(description="delete submits")
+parser.add_argument('-u','--uuid', default='None')
+parser.add_argument('-r','--reason', default='None')
+parser.add_argument('-p','--passphrase', default='None')
+args = parser.parse_args()
+delete_uuid = args.uuid
+passphrase = args.passphrase
+comment = args.reason
+
 
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
@@ -28,12 +39,15 @@ with open("submit.json", 'r') as load_f:
     load_dict = json.load(load_f)  # get ready to update the submit log
     # print(load_dict)
 
+correct_input=True
 while True:
-    delete_uuid = input("Input the UUID of the submit you want to delete:")
+    if delete_uuid == 'None' or correct_input==False:
+        delete_uuid = input("Input the UUID of the submit you want to delete:")
     if load_dict.get(delete_uuid):
         break
     else:
         print("Commit not found,please re-enter.")
+        correct_input=False
         continue
 
 print("\r")
@@ -43,7 +57,8 @@ print("Server name:" + server_name)
 df = pd.DataFrame.from_dict(load_dict[delete_uuid], orient='index')
 print(df)
 input("Press any key to continue.")
-comment = input("Input the reason you delete the commit:")
+if comment == 'None':
+    comment = input("Input the reason you delete the commit:")
 
 # writing message
 ticks = str(int(time.time()))
@@ -60,6 +75,8 @@ conf.read('mprdb.ini')
 keyid = conf.get('mprdb', 'ServerKeyId')
 if conf.get('mprdb','save_passphrase')=='True':
     passphrase=conf.get('mprdb','passphrase')
+elif passphrase != 'None':
+    passphrase = args.passphrase
 else:
     passphrase=input('input passphrase: ')
 # in windows ,a pop will rise to enter the passphrase,others will not.

@@ -7,6 +7,20 @@ import requests
 from retrying import retry
 import configparser
 import gnupg
+import argparse
+
+parser = argparse.ArgumentParser(description="new submits")
+parser.add_argument('-n','--name', default='None')
+parser.add_argument('-r','--reason', default='None')
+parser.add_argument('-s','--score', default='None')
+parser.add_argument('-p','--passphrase', default='None')
+args = parser.parse_args()
+string = args.name
+comment = args.reason
+score = args.score
+passphrase = args.passphrase
+
+correct_input=True
 
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()
@@ -27,7 +41,10 @@ headers = {
 
 # get player name from his uuid ,or conversely,uuid can be 32 or 36 bits
 while True:
-    string = input("Input the player's UUID or NAME:")
+    if string == 'None' or correct_input==False:
+        string = input("Input the player's UUID or NAME:")
+    else:
+        skip_pause = True
     print("Searching for player....")
     if len(string) == 36 or len(string) == 32:
         player_uuid = string
@@ -44,6 +61,7 @@ while True:
             exit()
         if res.text == "":
             print("Player not found!")
+            correct_input=False
             continue
         else:
             result = res.json()
@@ -69,19 +87,27 @@ while True:
             break
         else:
             print("Player not found!")
+            correct_input=False
             continue
 
-print("\r")
-print("=====Confirm the player=====")
-print("Player Name:" + player_name)
-print("Player UUID:" + player_uuid)
-input("Press any key to continue.")
+if skip_pause == False:
+    print("\r")
+    print("=====Confirm the player=====")
+    print("Player Name:" + player_name)
+    print("Player UUID:" + player_uuid)
+    input("Press any key to continue.")
 
-comment = input("Input the comment:")
+correct_input=True
+if comment == 'None':
+    comment = input("Input the comment:")
 while True:
-    points = input("Input the points:")
-    points = int(points)
+    if score == 'None' or correct_input==False:
+        points_str = input("Input the points:")
+        points = float(points_str)
+    else:
+        points=float(score)
     if points < -1 or points > 1 or points == 0:
+        correct_input=False # re-enter to break this loop
         print("Illegal input. Please enter a number between - 1 and 1 except 0")
     else:
         break
@@ -119,6 +145,8 @@ conf.read('mprdb.ini')
 keyid = conf.get('mprdb', 'ServerKeyId')
 if conf.get('mprdb','save_passphrase')=='True':
     passphrase=conf.get('mprdb','passphrase')
+elif passphrase != 'None':
+    passphrase = args.passphrase
 else:
     passphrase=input('input passphrase: ')
 # in windows ,a pop will rise to enter the passphrase,others will not.
@@ -152,7 +180,7 @@ if not os.path.exists('submit.json'):
         f.write('{}')
 
 commit={}
-print(type(commit))
+# print(type(commit))
 
 # check status
 status = res.get("status")

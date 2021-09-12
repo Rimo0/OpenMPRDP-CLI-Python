@@ -3,8 +3,15 @@ import json
 import traceback
 import requests
 from retrying import retry
+import argparse
 
-uuid = input("Input the UUID of the submit you want to check:")
+parser = argparse.ArgumentParser(description="get submit detail")
+parser.add_argument('-u','--uuid', default="None")
+args = parser.parse_args()
+uuid = args.uuid
+
+if uuid == 'None':
+    uuid = input("Input the UUID of the submit you want to check:")
 url="https://test.openmprdb.org/v1/submit/uuid/"+uuid
 
 try:

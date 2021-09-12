@@ -5,10 +5,18 @@ import traceback
 import pandas as pd
 import requests
 from retrying import retry
+import argparse
+
+parser = argparse.ArgumentParser(description="get submit from server")
+parser.add_argument('-u','--uuid', default="None")
+args = parser.parse_args()
+serverid = args.uuid
+correct_input=True
 
 # solve the 16 32 and 36 bits' server uuid
 while True:
-    serverid = input("Input the server UUID or server key ID: ")
+    if serverid == 'None' or correct_input==False:
+        serverid = input("Input the server UUID or server key ID: ")
     # print(len("2512ab29a00e8686")) #16
     if len(serverid) == 16:
         url = "https://test.openmprdb.org/v1/submit/key/" + serverid
@@ -18,6 +26,7 @@ while True:
         break
     else:
         print("Illegal input, please re-enter")
+        correct_input==False
 
 print("Input the number you want to view, in reverse order")
 limitnum = input("No restrictions, just leave it blank :")
@@ -42,12 +51,13 @@ try:
     def _parse_url(url):
         response = requests.get(url, timeout=5)
         return response
+    response = _parse_url(url)
 except:
     print("An error occurred")
     print(traceback.format_exc())
     input("Press any key to exit")
     exit()
-response = _parse_url(url)
+
 res = response.json()
 # print json.loads('"%s"' %res) #type(res)=dict
 
