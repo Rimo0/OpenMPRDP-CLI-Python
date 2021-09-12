@@ -82,8 +82,6 @@ All submits will be saved to file `submit.json`
 2. run `delete_submit.py` to delete a submit
 
 ### Delete server (yourself)
-You need to re-register later
-
 1. run `delete_server.py` to delete the server yourself from the remote server
 
 ### Delete server (you trusted)
