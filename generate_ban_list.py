@@ -6,7 +6,12 @@ import requests
 import shutil
 from retrying import retry
 import configparser
+import argparse
 
+parser = argparse.ArgumentParser(description="generate ban list")
+parser.add_argument('-m','--mode', default='manual')
+args = parser.parse_args()
+mode = args.mode
 
 if not os.path.exists('players_map.json'):
     with open('players_map.json', 'w+') as f:
@@ -164,5 +169,8 @@ if changed:
 else:
     print('Nothing changed.')
 
-print("Finished! Exitting in 3 seconds...")
-time.sleep(3)
+if mode == 'manual':
+    print("Finished! Exitting in 3 seconds...")
+    time.sleep(3)
+elif mode == 'auto':
+    print('Auto update finished.')

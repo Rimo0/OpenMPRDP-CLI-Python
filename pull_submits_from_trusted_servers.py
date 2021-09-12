@@ -7,6 +7,13 @@ from retrying import retry
 import configparser
 import gnupg
 import shutil
+import argparse
+
+parser = argparse.ArgumentParser(description="pull submits")
+parser.add_argument('-m','--mode', default='manual')
+args = parser.parse_args()
+mode = args.mode
+
 
 if not os.path.exists('TrustPlayersList'):
     os.mkdir('TrustPlayersList')
@@ -139,5 +146,8 @@ else:
     print("All signatures have been verified well and saved.")
 print("\n")
 
-print("Finished! Exitting in 3 seconds...")
-time.sleep(3)
+if mode == 'manual':
+    print("Finished! Exitting in 3 seconds...")
+    time.sleep(3)
+elif mode == 'auto':
+    print('Pull submits finished.')

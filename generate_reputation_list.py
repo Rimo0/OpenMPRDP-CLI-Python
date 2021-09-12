@@ -2,9 +2,15 @@
 import os
 import json
 import time
+import argparse
 
 start = time.time()
 count = 0
+
+parser = argparse.ArgumentParser(description="generate reputation base")
+parser.add_argument('-m','--mode', default='manual')
+args = parser.parse_args()
+mode = args.mode
 
 reputation = {}
 
@@ -87,5 +93,9 @@ print("=====================")
 print("Solved " + str(count) + " submit<s>.")
 print("Total time: " + str(end - start) + " second<s>.")
 print("=====================")
-print("Finished! Exitting in 3 seconds...")
-time.sleep(3)
+
+if mode == 'manual':
+    print("Finished! Exitting in 3 seconds...")
+    time.sleep(3)
+elif mode == 'auto':
+    print('Generate reputation base finished.')
