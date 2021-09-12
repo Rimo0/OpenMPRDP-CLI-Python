@@ -59,6 +59,7 @@ print(df)
 input("Press any key to continue.")
 if comment == 'None':
     comment = input("Input the reason you delete the commit:")
+    skip_pause=False
 else:
     skip_pause=True
 # writing message
@@ -129,7 +130,7 @@ if status == "NG":
     print("Submit not found,or Unauthorized")
 
 if skip_pause==False:
-    print("Finished! Exitting in 10 seconds...")
-    time.sleep(10)
+    print("Finished! Exitting in 5 seconds...")
+    time.sleep(5)
 else:
     print('Finished!')

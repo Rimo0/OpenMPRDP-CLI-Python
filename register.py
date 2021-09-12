@@ -34,6 +34,7 @@ keyfilename = "public_key.asc"
 
 if server_name == 'None':
     server_name = input("Input the server name:")
+    skip_pause=False
 else:
     skip_pause=True
 
@@ -141,7 +142,7 @@ if status == "NG":
     print("400 Bad Request")
 
 if skip_pause==False:
-    print("Finished! Exitting in 10 seconds...")
-    time.sleep(10)
+    print("Finished! Exitting in 5 seconds...")
+    time.sleep(5)
 else:
     print('Finished!')

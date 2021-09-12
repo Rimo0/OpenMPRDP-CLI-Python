@@ -33,6 +33,7 @@ print("Server UUID:" + server_uuid)
 
 if comment == 'None':
     comment = input("Input the comment to delete:")
+    skip_pause=False
 else:
     skip_pause=True
 
@@ -109,7 +110,7 @@ if status == "NG":
     print("Server not found,or Unauthorized")
 
 if skip_pause==False:
-    print("Finished! Exitting in 10 seconds...")
-    time.sleep(10)
+    print("Finished! Exitting in 5 seconds...")
+    time.sleep(5)
 else:
     print('Finished!')

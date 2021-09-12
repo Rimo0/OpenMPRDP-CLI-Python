@@ -12,6 +12,7 @@ uuid = args.uuid
 
 if uuid == 'None':
     uuid = input("Input the UUID of the submit you want to check:")
+    skip_pause=False
 else:
     skip_pause=True
 url="https://test.openmprdb.org/v1/submit/uuid/"+uuid

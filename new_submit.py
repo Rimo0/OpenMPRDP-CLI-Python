@@ -21,6 +21,7 @@ score = args.score
 passphrase = args.passphrase
 
 correct_input=True
+skip_pause=False
 
 gpg = gnupg.GPG(gnupghome='./gnupg')
 conf = configparser.ConfigParser()

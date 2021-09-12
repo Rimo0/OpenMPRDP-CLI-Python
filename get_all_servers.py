@@ -22,6 +22,8 @@ print("Getting servers list...")
 print("The last " + maxnum + " servers will be displayed.")
 
 if maxnum == '45':
+    skip_pause=False
+else:
     skip_pause=True
 
 try:
