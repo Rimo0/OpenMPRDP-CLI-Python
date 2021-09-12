@@ -130,15 +130,16 @@ with open("message.txt.asc", "r", encoding='utf-8') as f:
     data = data.encode('utf-8')
 try:
     @retry(stop_max_attempt_number=3)
-    def _parse_url(url, data, headers):
+    def parse_url(url, data, headers):
         response = requests.put(url, data=data, headers=headers, timeout=5)
         return response
+    response = parse_url(url, data, headers)
 except:
     print("An error occurred")
     print(traceback.format_exc())
     input("Press any key to exit")
     exit()
-response = _parse_url(url, data, headers)
+
 
 res = response.json()
 print(json.loads('"%s"' % res))  # type(res)=dict
