@@ -65,7 +65,7 @@ install then manually or use `pip install -r requirements.txt`
 
 ### Pull from other servers
 1. run `get_all_server.py` to get a list of registered servers 
-2. run `get_trust_public_key`.py to download the public key of the server you want to trust
+2. run `get_trust_public_key.py` to download the public key of the server you want to trust
 3. run `update.py` to update ban list.
 The old ban list will be saved in folder `backup`
 
