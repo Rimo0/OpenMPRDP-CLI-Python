@@ -12,6 +12,8 @@ uuid = args.uuid
 
 if uuid == 'None':
     uuid = input("Input the UUID of the submit you want to check:")
+else:
+    skip_pause=True
 url="https://test.openmprdb.org/v1/submit/uuid/"+uuid
 
 try:
@@ -33,4 +35,7 @@ if status == "NG":
     print("400 Bad Request or 404 Not found")
     print("This submission may not exist or may have been deleted.")
     
-input("Press any key to exit")
+if skip_pause==False:
+    input("Press any key to exit")
+else:
+    print('Finished!')

@@ -203,5 +203,9 @@ if status == "OK":
 if status == "NG":
     print("400 Bad Request or 401 Unauthorized")
 
-print("Finished! Exitting in 10 seconds...")
-time.sleep(10)
+
+if skip_pause==False:
+    print("Finished! Exitting in 10 seconds...")
+    time.sleep(10)
+else:
+    print('Finished!')

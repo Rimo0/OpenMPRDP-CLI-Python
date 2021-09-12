@@ -140,5 +140,5 @@ while True:
     if choice == "0":
     	break
 
-print("Finished! Exitting in 10 seconds...")
-time.sleep(10)
+print("Finished! Exitting in 5 seconds...")
+time.sleep(5)

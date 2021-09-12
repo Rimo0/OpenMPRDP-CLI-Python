@@ -7,7 +7,7 @@ from retrying import retry
 import argparse
 
 parser = argparse.ArgumentParser(description="get server lists")
-parser.add_argument('-m','--max', default=50)
+parser.add_argument('-m','--max', default=45)
 args = parser.parse_args()
 maxnum = str(args.max)
 
@@ -20,6 +20,9 @@ url = "https://test.openmprdb.org/v1/server/list" + "?limit=" + maxnum
 
 print("Getting servers list...")
 print("The last " + maxnum + " servers will be displayed.")
+
+if maxnum == '45':
+    skip_pause=True
 
 try:
     @retry(stop_max_attempt_number=3)
@@ -40,4 +43,7 @@ df = pd.DataFrame(res["servers"])
 df1 = df.loc[:, ['id', 'key_id', 'server_name', 'uuid']]  # hide key "public_key" here, it's useless now
 print(df1)
 
-input("Press any key to exit")
+if skip_pause==False:
+    input("Press any key to exit")
+else:
+    print('Finished!')

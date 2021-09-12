@@ -34,6 +34,8 @@ keyfilename = "public_key.asc"
 
 if server_name == 'None':
     server_name = input("Input the server name:")
+else:
+    skip_pause=True
 
 with open("message.txt", 'r+', encoding='utf-8') as f:
     f.truncate(0)
@@ -138,5 +140,8 @@ if status == "OK":
 if status == "NG":
     print("400 Bad Request")
 
-print("Finished! Exitting in 10 seconds...")
-time.sleep(10)
+if skip_pause==False:
+    print("Finished! Exitting in 10 seconds...")
+    time.sleep(10)
+else:
+    print('Finished!')
