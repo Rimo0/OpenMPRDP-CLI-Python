@@ -41,6 +41,13 @@ def key_generate():
             print("Invalid input!")
         else:
             break
+    print('Do you wan to save and auto fill your passphrase in the future?')
+    choice = input('1 to save and auto fill,0 to skip this step.')
+    if choice == '1':
+        conf.read('mprdb.ini')
+        conf.set('mprdb','save_passphrase','True')
+        conf.set('mprdb','passphrase',passphrase)
+        conf.write(open('mprdb.ini', 'w'))
 
     input_data = gpg.gen_key_input(name_email=name_email, passphrase=passphrase, name_real=name_real,
                                    key_length=2048)

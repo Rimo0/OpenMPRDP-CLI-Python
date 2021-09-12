@@ -58,7 +58,10 @@ with open("message.txt", 'r+') as f:
 # os.system("gpg -a --clearsign message.txt")
 conf.read('mprdb.ini')
 keyid = conf.get('mprdb', 'ServerKeyId')
-passphrase=input('input passphrase: ')
+if conf.get('mprdb','save_passphrase')=='True':
+    passphrase=conf.get('mprdb','passphrase')
+else:
+    passphrase=input('input passphrase: ')
 # in windows ,a pop will rise to enter the passphrase,others will not.
 with open('message.txt', 'rb') as f:
     status = gpg.sign_file(f, keyid=keyid, output='message.txt.asc',passphrase=passphrase)

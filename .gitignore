@@ -4,6 +4,7 @@
 /backup/
 *.asc
 *.json
+*.swp
 *-*-*-*-*
 message.txt
 mprdb.ini
