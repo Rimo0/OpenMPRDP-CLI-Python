@@ -89,6 +89,7 @@ you need to re-register later
 3. delete public key in folder `TrustPublicKey` , with its `server uuid`
 
 ### Import public key manually
+The public key must be registered in remote server.
 1. copy the key file to OpenMPRDB folder
 2. rename the key to `key.asc`
 3. run `key_management.py` and command `im`
