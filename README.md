@@ -64,11 +64,11 @@ install then manually or use `pip install -r requirements.txt`
 7. then you need to register first. run `register.py` to register yourself
 
 ### Pull from other servers
+The old ban list will be saved in folder `backup`
+
 1. run `get_all_server.py` to get a list of registered servers 
 2. run `get_trust_public_key.py` to download the public key of the server you want to trust
 3. run `update.py` to update ban list.
-
-The old ban list will be saved in folder `backup`
 
 ### If occured some errors,try the following components.
 1. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
@@ -76,15 +76,15 @@ The old ban list will be saved in folder `backup`
 3. run `generate_ban_list.py` to generate a new ban list
 
 ### Create / delete submit
-1. run `new_submit.py` to create a new submit
+All submits will be saved to file `submit.json`
 
-all submits will be saved to file `submit.json`
+1. run `new_submit.py` to create a new submit
 2. run `delete_submit.py` to delete a submit
 
 ### Delete server (yourself)
-1. run `delete_server.py` to delete the server yourself from the remote server
+You need to re-register later
 
-you need to re-register later
+1. run `delete_server.py` to delete the server yourself from the remote server
 
 ### Delete server (you trusted)
 1. run `key_management.py` and command `list` to list all the keys
