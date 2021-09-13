@@ -80,7 +80,7 @@ The old ban list will be saved in folder `backup`
 
 #### In command line
 1. Command `python3 mprdb.py --list [-max MaxItemsToGet]` to get the list of registered server.
-2. TBD
+2. (TBD)Command `python3 mprdb.py --getkey -u ServerUUID -c Choice -w Weight`,about the `Choice`,if you input 1,the key will be saved and import,if you input 3,the key will only be saved as a key file in MPRDB folder , with its ServerUUID;about the `weight` ,it can be a number from 0 to 5 ,except 0.
 3. Command `python3 mprdb.py --update` to update the ban list
 
 
