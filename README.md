@@ -54,14 +54,24 @@ install then manually or use `pip install -r requirements.txt`
 
 4. Each functional module is an independent file, which can be started as required.
 
+5. You can open it directly or run it from the command line
+
 # Workflow
 ### First to run
+
+#### In command line
+1. Command `python3 mprdb.py --key -n YourName -e YourEmail -p Passphrase -c Choice` to generate a key pair,about the argument `Choice`,input 1 means that the passphrase will be saved and auto fill in the future,input 0 to skip this step.
+2. Command `python3 mprdb.py --key -m list` to get the key list
+3. Copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
+
+
+#### Directly
 1. run `key_management.py` and command `init` to generate a key pair
 2. run `key_management.py` and command `list` and copy your keyid
 3. copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
-5. modify the parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
-6. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
-7. then you need to register first. run `register.py` to register yourself
+4. modify the parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
+5. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
+6. then you need to register first. run `register.py` to register yourself
 
 ### Pull from other servers
 The old ban list will be saved in folder `backup`
