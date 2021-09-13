@@ -3,6 +3,17 @@ import gnupg
 import pandas as pd
 import configparser
 import os
+import argparse
+
+parser = argparse.ArgumentParser(description="key management")
+parser.add_argument('-m','--mode', default='manual')
+parser.add_argument('-n','--name', default='None')
+parser.add_argument('-e','--email', default='None')
+parser.add_argument('-p','--passphrase', default='')
+parser.add_argument('-c','--choice', default='0')
+parser.add_argument('-l','--list', action='store_true', default=False)
+args = parser.parse_args()
+
 
 if not os.path.exists('gnupg'):
     os.mkdir('gnupg')
@@ -121,6 +132,42 @@ def delete_key():
     print('Public key:')
     print(gpg.delete_keys(keyfg))
 
+def key_generate_auto():
+    name_real = args.name
+    name_email = args.email
+    passphrase = args.passphrase
+    
+    choice = args.choice
+    if choice == '1':
+        conf.read('mprdb.ini')
+        conf.set('mprdb','save_passphrase','True')
+        conf.set('mprdb','passphrase',passphrase)
+        conf.write(open('mprdb.ini', 'w'))
+
+    input_data = gpg.gen_key_input(name_email=name_email, passphrase=passphrase, name_real=name_real,
+                                   key_length=2048)
+    keyid = gpg.gen_key(input_data)
+    key = str(keyid)  # key or keyid is its fingerprint
+    ascii_armored_public_keys = gpg.export_keys(key)
+    ascii_armored_private_keys = gpg.export_keys(key, True, passphrase=passphrase)
+
+    with open('public_key.asc', 'w+') as f:
+        f.write(ascii_armored_public_keys)
+    with open('private_key.asc', 'w+') as d:
+        d.write(ascii_armored_private_keys)
+    return
+
+mode=args.mode
+if mode == 'auto' :
+    if args.name != 'None' and args.email != 'None' and args.passphrase != 'None':
+        key_generate_auto()
+        exit()
+    else:
+        print('Missing arguments.')
+        exit()
+elif mode == 'list':
+    key_list()
+    exit()
 
 print("Usage:")
 print("1. generate a key pair,command init")

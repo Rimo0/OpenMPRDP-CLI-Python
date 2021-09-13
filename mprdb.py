@@ -6,11 +6,29 @@ import os
 def key_management():
     # Key management
     # argv = key
-    ## -i --init
-    arg_init = args.init
-    iinfo = 'TBD'
-    return info
+    # -n --name
+    # -e --email
+    # -p --passphrase
+    # -c --choice
+    # -m --mode
 
+    arg_name = args.name
+    arg_email = args.email
+    arg_passphrase = args.passphrase
+    arg_choice = str(args.choice)
+    arg_mode = args.mode
+
+    if arg_name != 'None' and arg_email != 'None' and arg_passphrase != 'None':
+        command = 'python3 key_management.py -m auto -n '+arg_name+' -e '+arg_email+' -p '+arg_passphrase+' -c '+arg_choice
+        os.system(command)
+        return 'Done!'
+    elif arg_mode == 'list':
+        command = 'python3 key_management.py -m list'
+        os.system(command)
+        return 'Done!'
+    else:
+        info = 'Missing arguments : --name or --email or --passphrase or --choice'
+        return info
 
 def register():
     # Register argv
@@ -21,13 +39,14 @@ def register():
     arg_passphrase = args.passphrase
     
     if arg_name=='None' :
-        info = 'Missing parameter : --name'
+        info = 'Missing parameter : --name '
         return info
     else:
         command = 'python3 register.py -n '+arg_name
         if arg_passphrase != '':
             command = command +' -p '+arg_passphrase
         os.system(command)
+        return 'Done!'
 
 
 def new_submit():
@@ -50,6 +69,7 @@ def new_submit():
         if arg_passphrase != '':
             command = command +' -p '+arg_passphrase
         os.system(command)
+        return 'Done!'
 
 def delete_submit():
     # Delete submits
@@ -68,6 +88,7 @@ def delete_submit():
         if arg_passphrase != '':
             command = command +' -p '+arg_passphrase
         os.system(command)
+        return 'Done!'
 
 
 def delete_server():
@@ -85,6 +106,7 @@ def delete_server():
         if arg_passphrase != '':
             command = command +' -p '+arg_passphrase
         os.system(command)
+        return 'Done!'
 
 
 def list_all_servers():
@@ -96,6 +118,7 @@ def list_all_servers():
     if arg_max != '':
         command = command + ' -m '+arg_max
     os.system(command)
+    return 'Done!'
 
 
 def get_submit_detail():
@@ -109,6 +132,7 @@ def get_submit_detail():
     else:
         command = 'python3 get_submit_detail.py'+' -u '+arg_uuid
         os.system(command)
+        return 'Done!'
 
 def get_submit_from_server():
     # Get submit from server
@@ -121,26 +145,30 @@ def get_submit_from_server():
     else:
         command = 'python3 get_submit_from_other_servers.py'+' -u '+arg_uuid
         os.system(command)
+        return 'Done!'
 
 
 def help_info():
-    print('')
+    info = 'try -h to get help info'
     return info
 
 def update():
     os.system('python3 update.py')
+    return 'Done!'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="main")
 
     # register sub keys
     parser.add_argument('-u', '--uuid', default='None')
-    parser.add_argument('-m', '--max', default='45')
+    parser.add_argument('--max', default='45')
     parser.add_argument('-n', '--name', default='None')
     parser.add_argument('-r', '--reason', default='None')
     parser.add_argument('-s', '--score', default='None')
     parser.add_argument('-p', '--passphrase', default='')
-    parser.add_argument('-i', '--init', default='None')
+    parser.add_argument('-e', '--email', default='None')
+    parser.add_argument('-c', '--choice', default='None')
+    parser.add_argument('-m', '--mode', default='manual')
 
     # register main keys
     parser.add_argument('--key', action='store_true', default=False)
