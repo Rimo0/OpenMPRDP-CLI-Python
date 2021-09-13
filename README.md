@@ -130,7 +130,13 @@ The public key must be registered in remote server.
 
 ### 0x07 Other functions
 1. `get_submit_detail.py` It's used to get a detail of a submission , through its `submit uuid`
+
+Command line: `python3 mprdb.py --detail -u SubmitUUID`
+
 2. `get_submit_from_other_servers.py` It's used to get all submits from a specific server ,  through its `server uuid`
+
+Command line: `python3 mprdb.py --listfrom -u ServerUUID`
+
 3. `key_management.py` Key management
 4. `reputation.json` The local reputation base
 5. `submit.json` The submits logs
