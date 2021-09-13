@@ -57,15 +57,17 @@ install then manually or use `pip install -r requirements.txt`
 5. You can open it directly or run it from the command line
 
 # Workflow
-### First to run
+### 0x00 First to run
 
 #### In command line
 1. Command `python3 mprdb.py --key -n YourName -e YourEmail -p Passphrase -c Choice` to generate a key pair,about the argument `Choice`,input 1 means that the passphrase will be saved and auto fill in the future,input 0 to skip this step.
 2. Command `python3 mprdb.py --key -m list` to get the key list
 3. Copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
+4. modify the parameter `banlist_path` in `mprdb.ini`.Change it into your server's ban list path.
+5. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
+6. Command `python3 mprdb.py --reg -n ServerName [-p Passphrase]` to register yourself
 
-
-#### Directly
+#### Run Directly
 1. run `key_management.py` and command `init` to generate a key pair
 2. run `key_management.py` and command `list` and copy your keyid
 3. copy the `keyid` and paste it into the parameter `serverkeyid` in the `mprdb.ini` file
@@ -73,33 +75,50 @@ install then manually or use `pip install -r requirements.txt`
 5. modify the parameter `min_point_toban = 0` in `mprdb.ini`. This is to add players whose reputation score is lower than this number to the ban list,the default value is 0
 6. then you need to register first. run `register.py` to register yourself
 
-### Pull from other servers
+### 0x01 Pull from other servers
 The old ban list will be saved in folder `backup`
 
+#### In command line
+1. Command `python3 mprdb.py --list [-max MaxItemsToGet]` to get the list of registered server.
+2. TBD
+3. Command `python3 mprdb.py --update` to update the ban list
+
+
+#### Run Directly
 1. run `get_all_server.py` to get a list of registered servers 
 2. run `get_trust_public_key.py` to download the public key of the server you want to trust
 3. run `update.py` to update ban list.
 
-### If occured some errors,try the following components.
+### 0x02 If occured some errors,try the following components.
 1. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
 2. run `generate_reputation_list.py` to generate a local reputation database
 3. run `generate_ban_list.py` to generate a new ban list
 
-### Create / delete submit
+### 0x03 Create / delete submit
 All submits will be saved to file `submit.json`
 
+#### In command line
+1. Command `python3 mprdb.py --new -n PlayerName/UUID -r Reason -s Score [-p Passphrase]` to put a new submit
+2. Command `python3 mprdb.py --del -u SubmitUUID -r Reason [-p Passphrase]` to delete a submit
+
+#### Run Directly
 1. run `new_submit.py` to create a new submit
 2. run `delete_submit.py` to delete a submit
 
-### Delete server (yourself)
+### 0x04 Delete server (yourself)
+
+#### In command line
+1. Command `python3 mprdb.py --shut -r Reason [-p Passphrase]` to delete yourself from the remote server
+
+#### Run Directly
 1. run `delete_server.py` to delete the server yourself from the remote server
 
-### Delete server (you trusted)
+### 0x05 Delete server (you trusted)
 1. run `key_management.py` and command `list` to list all the keys
 2. delete public key in `key_management.py` , use command `del` , with its key's `fingerprint`
 3. delete public key in folder `TrustPublicKey` , with its `server uuid`
 
-### Import public key manually
+### 0x06 Import public key manually
 The public key must be registered in remote server.
 
 1. copy the key file to OpenMPRDB folder
@@ -109,7 +128,7 @@ The public key must be registered in remote server.
 5. run `weight_management.py` to set weight for it
 6. run `update.py` to update ban list
 
-### Other functions
+### 0x07 Other functions
 1. `get_submit_detail.py` It's used to get a detail of a submission , through its `submit uuid`
 2. `get_submit_from_other_servers.py` It's used to get all submits from a specific server ,  through its `server uuid`
 3. `key_management.py` Key management
