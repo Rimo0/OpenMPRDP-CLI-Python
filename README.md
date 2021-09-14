@@ -56,6 +56,8 @@ install then manually or use `pip install -r requirements.txt`
 
 5. You can open it directly or run it from the command line
 
+Use `python mprdb.py -h` to get detail.
+
 # Workflow
 ### 0x00 First to run
 
