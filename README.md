@@ -59,7 +59,7 @@ install then manually or use `pip install -r requirements.txt`
 Use `python mprdb.py -h` to get detail.
 
 # Workflow
-### 0x00 First to run
+### 0x00 First time to run
 
 #### In command line
 1. Command `python3 mprdb.py --key -n YourName -e YourEmail -p Passphrase -c Choice` to generate a key pair,about the argument `Choice`,input 1 means that the passphrase will be saved and auto fill in the future,input 0 to skip this step.
