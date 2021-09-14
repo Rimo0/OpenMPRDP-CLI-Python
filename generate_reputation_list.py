@@ -78,7 +78,7 @@ for server in server_list:
             sump = reputation[player_uuid]
             sump = sump + player_point
             reputation[player_uuid] = sump
-
+        print('  >>From submit : '+submit)
         print("Solving player: " + player_uuid)
         print("With points: " + str(player_point_ori) + ", Magnification: " + str(pownum) + "x, Total points: " + str(
             sump))

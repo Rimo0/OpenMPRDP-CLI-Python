@@ -146,3 +146,5 @@ Command line: `python3 mprdb.py --listfrom -u ServerUUID`
 9. `weight_management.py` Set weight for servers that have not been weighted
 
 Command `python3 mprdb.py --setweight -u ServerUUID -w Weight` to set or change weight for a specific server
+
+10. `mprdb.py` Control center of command line parameters.Use `python mprdb.py -h` to get detail.

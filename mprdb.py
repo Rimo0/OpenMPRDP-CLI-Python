@@ -197,7 +197,7 @@ def setweight():
     return info
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="main")
+    parser = argparse.ArgumentParser(description="This is the help page for the mprdb command line parameters.")
 
     # register sub keys
     parser.add_argument('-u', '--uuid', default='None',help=argparse.SUPPRESS)
@@ -221,8 +221,8 @@ if __name__ == '__main__':
     parser.add_argument('--detail', action='store_true', default=False,help='>>Used to get a detail of a submission.With key "-u submit_uuid"')
     parser.add_argument('--listfrom', action='store_true', default=False,help='>>Used to get all submission from a specific server.With key "-u server_uuid"')
     parser.add_argument('--update', action='store_true', default=False,help='>>Used to auto update the ban list.No key required.')
-    parser.add_argument('--getkey',action='store_true',default=False)
-    parser.add_argument('--setweight',action='store_true',default=False)
+    parser.add_argument('--getkey',action='store_true',default=False,help='>>Used to download public key from remote server.With key "-u ServerUUID -w Weight -c Choice",choice input 1 will save and import the key,choose 3 will only save the key as a file and save to the MPRDB folder.')
+    parser.add_argument('--setweight',action='store_true',default=False,help='>>Used to set or change weight for a specific server.With key "-u ServerUUID -w Weight"')
 
     args = parser.parse_args()
 
