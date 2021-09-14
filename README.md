@@ -89,12 +89,12 @@ The old ban list will be saved in folder `backup`
 2. run `get_trust_public_key.py` to download the public key of the server you want to trust
 3. run `update.py` to update ban list.
 
-### 0x02 If occured some errors,try the following components.
+#### If occured some errors,try the following components.
 1. run `pull_submits_from_trusted_servers.py` to get submissions from servers you trust
 2. run `generate_reputation_list.py` to generate a local reputation database
 3. run `generate_ban_list.py` to generate a new ban list
 
-### 0x03 Create / delete submit
+### 0x02 Create / delete submit
 All submits will be saved to file `submit.json`
 
 #### In command line
@@ -105,7 +105,7 @@ All submits will be saved to file `submit.json`
 1. run `new_submit.py` to create a new submit
 2. run `delete_submit.py` to delete a submit
 
-### 0x04 Delete server (yourself)
+### 0x03 Delete server (yourself)
 
 #### In command line
 1. Command `python3 mprdb.py --shut -r Reason [-p Passphrase]` to delete yourself from the remote server
@@ -113,12 +113,12 @@ All submits will be saved to file `submit.json`
 #### Run Directly
 1. run `delete_server.py` to delete the server yourself from the remote server
 
-### 0x05 Delete server (you trusted)
+### 0x04 Delete server (you trusted)
 1. run `key_management.py` and command `list` to list all the keys
 2. delete public key in `key_management.py` , use command `del` , with its key's `fingerprint`
 3. delete public key in folder `TrustPublicKey` , with its `server uuid`
 
-### 0x06 Import public key manually
+### 0x05 Import public key manually
 The public key must be registered in remote server.
 
 1. copy the key file to OpenMPRDB folder
@@ -128,7 +128,7 @@ The public key must be registered in remote server.
 5. run `weight_management.py` to set weight for it
 6. run `update.py` to update ban list
 
-### 0x07 Other functions
+### 0x06 Other functions
 1. `get_submit_detail.py` It's used to get a detail of a submission , through its `submit uuid`
 
 Command line: `python3 mprdb.py --detail -u SubmitUUID`
