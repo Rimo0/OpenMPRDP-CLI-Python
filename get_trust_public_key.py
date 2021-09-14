@@ -8,12 +8,22 @@ import gnupg
 import shutil
 import json
 import time
+import argparse
+
+parser = argparse.ArgumentParser(description='get trust public key')
+parser.add_argument('-u','--uuid',default='')
+parser.add_argument('-w','--weight',default='-1')
+parser.add_argument('-c','--choice',default='-1')
+args = parser.parse_args()
+serverid = args_uuid = args.uuid
+point = float(args.weight)
+args_choice = args.choice
 
 def weight(server_uuid,point):
-    if not os.path.exists('weight,json'):
+    if not os.path.exists('weight.json'):
     	with open('weight.json','w+') as f:
         	f.write('{}')
-    
+
     with open("weight.json",'r') as f:
         key_list=json.loads(f.read())
 
@@ -77,13 +87,19 @@ for items in res["servers"]:
     uuid = str(items["uuid"])
     keyid_uuid_dict[keyid] = uuid
 
+correct_input = True
+
 # get server uuid from server name, or conversely
 while True:
     while True:
         # i = os.system("cls")
-        print('Command 0 to exit.')
-        serverid = input("Input the server FULL UUID or server key ID: ")
+        if correct_input == False:
+            print('Command 0 to exit.')
+            serverid = input("Input the server FULL UUID or server key ID: ")
         # print(len("2512ab29a00e8686")) #16
+        if serverid == '':
+            correct_input=False
+            continue
         if serverid == '0':
             exit()
         if len(serverid) == 16:
@@ -95,6 +111,7 @@ while True:
             server_uuid = serverid
             break
         else:
+            correct_input = False
             print("Illegal input, please re-enter")
 
     print("\r")
@@ -105,10 +122,16 @@ while True:
     print("Public key block:\n")
     print(uuid_dict[server_uuid])
     print("\r")
-    print('Input 1 to save and import this public key, 2 to re-enter')
-    print("3 to only save this public key, 0 to exit")
 
-    choice = input("Input a number :")
+    choice = args_choice
+    while True:
+        if int(choice) < 0 or int(choice) > 4:
+            print('Input 1 to save and import this public key, 2 to re-enter')
+            print("3 to only save this public key, 0 to exit")
+            choice = input("Input a number :")
+        else:
+            break
+
     file_name = server_uuid
     if choice == "1":
         with open(file_name, 'w') as f:
@@ -126,19 +149,34 @@ while True:
         key_data = open(filepath).read()
         import_result = gpg.import_keys(key_data)
         print(import_result.results)
+
+        correct_input = True
         while True:
-            point=float(input("Input the weight,from 0 to 5,except 0 :"))
+            if correct_input == False:
+                point=float(input("Input the weight,from 0 to 5,except 0 :"))
+            
+            if point < 0 and correct_input == True: # default = -1
+                correct_input=False
+                continue
+
             if point>5 or point<=0:
-                print("Illegal input, please re-enter")
+                print("Illegal input, please re-enter,from 0 - 5")
                 continue
             break
         weight(server_uuid,point)
+        if args_uuid != '': # break in command line
+            break
 
     if choice == "3":
         with open(file_name, 'w') as f:
             f.write(uuid_dict[server_uuid])
+        if args_uuid != '': # break in command line
+            break
     if choice == "0":
     	break
 
-print("Finished! Exitting in 5 seconds...")
-time.sleep(5)
+if args_uuid == '': 
+    print("Finished! Exitting in 5 seconds...")
+    time.sleep(5)
+else: # skip pause in command line
+    print('Done!')

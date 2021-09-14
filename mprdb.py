@@ -1,6 +1,7 @@
 import argparse
 import sys
 import os
+import json
 
 
 def key_management():
@@ -156,6 +157,45 @@ def update():
     os.system('python3 update.py')
     return 'Done!'
 
+def getkey():
+    # Get trusted public key
+    # argv = getkey
+    # -u uuid
+    # -w weight
+    # -c choice
+    args_uuid = args.uuid
+    args_weight = args.weight
+    args_choice = args.choice
+
+    if args_uuid == 'None' or args_weight == 'None' or args_choice == 'None':
+        info = 'Missng arguments : --uuid or --weight or --choice'
+        return info
+    else:
+        command = 'python3 get_trust_public_key.py -u '+args_uuid+' -w '+args_weight+' -c '+args_choice
+        os.system(command)
+
+def setweight():
+    # args = setweight
+    # -u --uuid
+    # -w --weight
+    args_uuid = args.uuid
+    args_weight = args.weight
+
+    if not os.path.exists('weight.json'):
+    	with open('weight.json','w+') as f:
+        	f.write('{}')
+    
+    with open("weight.json",'r') as f:
+        key_list=json.loads(f.read())
+
+    key_list[args_uuid]=args_weight
+    
+    with open("weight.json", "w") as fp:
+        fp.write(json.dumps(key_list,indent=4))
+    
+    info = 'Set server weight : '+args_uuid+' to '+args_weight
+    return info
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="main")
 
@@ -169,6 +209,7 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--email', default='None',help=argparse.SUPPRESS)
     parser.add_argument('-c', '--choice', default='None',help=argparse.SUPPRESS)
     parser.add_argument('-m', '--mode', default='manual',help=argparse.SUPPRESS)
+    parser.add_argument('-w', '--weight',default='None',help=argparse.SUPPRESS)
 
     # register main keys
     parser.add_argument('--key', action='store_true', default=False,help='>>Used to generate key pair and get lists.With key "-n name -e email -i choice -p passphrase".Choice input 1 to save and auto fill passphrase in the future,0 will not.To get a list of keys, use key "-m list"')
@@ -180,6 +221,8 @@ if __name__ == '__main__':
     parser.add_argument('--detail', action='store_true', default=False,help='>>Used to get a detail of a submission.With key "-u submit_uuid"')
     parser.add_argument('--listfrom', action='store_true', default=False,help='>>Used to get all submission from a specific server.With key "-u server_uuid"')
     parser.add_argument('--update', action='store_true', default=False,help='>>Used to auto update the ban list.No key required.')
+    parser.add_argument('--getkey',action='store_true',default=False)
+    parser.add_argument('--setweight',action='store_true',default=False)
 
     args = parser.parse_args()
 
@@ -208,6 +251,12 @@ if __name__ == '__main__':
         print(info)
     elif args.update == True:
         update()
+    elif args.getkey == True:
+        info = getkey()
+        print(info)
+    elif args.setweight == True:
+       info = setweight()
+       print(info)
     else:
         print('Invalid parameter.')
         help_info()

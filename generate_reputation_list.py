@@ -25,7 +25,7 @@ for server in server_list:
     submit_list = os.listdir(file_dir + "/" + server)  # submit list
 
     if weight.get(server) is None:
-        print("Server :" + server + " has no weight set.")
+        print("Server : " + server + " has no weight set.")
         input("Press any key to exit")
         exit()
     else:

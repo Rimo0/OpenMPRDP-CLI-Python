@@ -144,3 +144,5 @@ Command line: `python3 mprdb.py --listfrom -u ServerUUID`
 7. `weight.json` The local weight base
 8. `players_map.json` Saved players uuid and name
 9. `weight_management.py` Set weight for servers that have not been weighted
+
+Command `python3 mprdb.py --setweight -u ServerUUID -w Weight` to set or change weight for a specific server

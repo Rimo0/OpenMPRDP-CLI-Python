@@ -40,5 +40,5 @@ for items in wait_to_weight_list:
 with open("weight.json", "w") as fp:
     fp.write(json.dumps(old_key_list,indent=4))
 print("Finisned")
-print("Finished! Exitting in 5 seconds...")
-time.sleep(5)
+print("Finished! Exitting in 3 seconds...")
+time.sleep(3)
