@@ -1,3 +1,7 @@
+# The project is being refactored
+
+See the new page : https://github.com/RimoOvO/OpenMPRDB-Python-CLI
+
 # OpenMPRDB-CLI-Python
 
 A Python based MPRDB client
